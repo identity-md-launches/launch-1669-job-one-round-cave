@@ -1,0 +1,33 @@
+{
+  "source_sha256": "ead64051ad3128da20251e58a32f4a66607376a53a3e396df16f9cb8a74fea9f",
+  "output_sha256": "723ebfca90b168dca8d5e6a26b72105142d465b4c1f29a7a0cd72927374c5474",
+  "format": "PNG",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "placement": [
+    655,
+    180,
+    170,
+    100
+  ],
+  "changed_pixels": 4672,
+  "outside_placement_unchanged": true,
+  "insert_alpha_bounds": [
+    264,
+    224,
+    1429,
+    803
+  ],
+  "preview": {
+    "format": "JPEG",
+    "dimensions": [
+      512,
+      512
+    ],
+    "bytes": 56349
+  },
+  "unmet_visual_requirements": [],
+  "visual_review": "Complete PNG and JPEG inspected: inherited Pepe and five-digit hands intact; flat earth-pigment addition, no text; no unmet requirement observed."
+}

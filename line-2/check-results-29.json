@@ -1,0 +1,52 @@
+{
+  "tests": {
+    "command": "python3 -B -m unittest discover -s line-2/tools/draft-bundle -p test_*.py -v",
+    "passed": 11,
+    "exit_code": 0
+  },
+  "demo": {
+    "schema": "permission-draft-bundle-report-v1",
+    "status": "complete_reviewed_bundle",
+    "matches_reviewed_bundle": true,
+    "permission_gate_decision": "deny",
+    "chain_id": 1,
+    "token_address": "0xd782bdea4ef02a0bd391eb9089470c8080f0a68e",
+    "block_number": 26184897,
+    "block_hash": "0xbcad3af0fad3def330e01bef9d4352ae1fd1b1b1c17dad252205aecf2c807563",
+    "anchors_match": true,
+    "expected_count": 3,
+    "received_count": 3,
+    "missing_count": 0,
+    "unexpected_count": 0,
+    "duplicate_count": 0,
+    "missing_pairs": [],
+    "complete_wallet_audit": false,
+    "limitations": [
+      "Completeness means only the optional candidates derived from supplied evidence and policy.",
+      "A matching empty bundle means no reviewed candidates, never a complete wallet audit.",
+      "Historical RPC evidence is trusted; unknown spenders, Permit2 and signatures are omitted.",
+      "No age, canonicality or future-state guarantee; refresh evidence before owner review.",
+      "No owner authorization, signature, simulation, transaction submission or execution is provided."
+    ],
+    "demonstration": true
+  },
+  "delivery": {
+    "new_record": 29,
+    "prior_record_files_unchanged": 36,
+    "goal_byte_identical": true,
+    "wall_dimensions": [
+      1254,
+      1254
+    ],
+    "wall_format": "PNG",
+    "preview_dimensions": [
+      512,
+      512
+    ],
+    "preview_format": "JPEG",
+    "wall_sha256": "723ebfca90b168dca8d5e6a26b72105142d465b4c1f29a7a0cd72927374c5474",
+    "changed_pixels": 4672,
+    "outside_placement_changed_pixels": 0,
+    "new_files_under_100KB": true
+  }
+}

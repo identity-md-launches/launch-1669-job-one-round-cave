@@ -1,0 +1,27 @@
+{
+  "ancestor_sha256": "96b51a56587bbe348839bbf89a47f0c1d59be4f96b56f34826c58d2d2b74a493",
+  "wall_sha256": "81616eefe73979fa87676409f723f84f7a0cb6cfeb4f79496e90979969e15d9d",
+  "wall": {
+    "width": 1254,
+    "height": 1254,
+    "format": "PNG",
+    "mode": "RGB",
+    "bytes": 3974680
+  },
+  "jpeg": {
+    "width": 512,
+    "height": 512,
+    "format": "JPEG",
+    "bytes": 55436
+  },
+  "addition_box": [
+    735,
+    565,
+    930,
+    690
+  ],
+  "changed_pixels_inside": 2385,
+  "changed_pixels_outside": 0,
+  "method": "Small deterministic dry-brush sealed-tablet overlay on preserved ancestor rock",
+  "unmet_visual_requirements": []
+}

@@ -10,6 +10,12 @@ It never prepares settlement: the output has no recipient, router, calldata,
 gas choice, signature, key, or transaction. It is deliberately a handoff for
 human review rather than something that can spend or send.
 
+This round also adds an offline verifier for a handoff that has crossed a file
+or worker boundary. It checks the exact schema, pinned pool, token direction,
+canonical source digests, raw/display unit agreement, self-digest, and the
+absence of settlement data. It checks the handoff itself, not the original
+evidence; use the normal handoff command to re-review a snapshot/report/policy.
+
 ## One command to see it working
 
 From the repository root, with Python 3.10+ and no installation or network:
@@ -25,15 +31,28 @@ Ethereum block 26,184,260. It returns `ready_for_human_review` for exactly
 REPORT --amount AMOUNT` accepts caller-supplied workspace JSON and repeats the
 same review before making a handoff.
 
+To verify a saved handoff after transfer, run:
+
+```sh
+python3 -B line-1/tools/zto-handoff/zto_handoff.py --verify line-1/tools/zto-handoff/demo-handoff.json
+```
+
+The file path must be inside this workspace, is capped at 100 KB, and no
+network call is made. An accepted result is integrity checking only: it is not
+an execution approval or a fresh quote.
+
 ## What happened when tried
 
 The demonstration succeeded offline and tests covered the accepted historical
-candidate, rejection of an unreviewed or partial amount, report tampering, and
-the no-network CLI path:
+candidate, rejection of an unreviewed or partial amount, report tampering,
+handoff digest/unit/transaction tampering, and the no-network CLI path:
 
 ```sh
 python3 -B -m unittest discover -s line-1/tools/zto-handoff -p 'test_*.py' -v
 ```
+
+When tried this round, all six focused tests passed and the committed
+`demo-handoff.json` verified as `accepted` offline.
 
 The output is a planning bound from a historical snapshot, not a current quote,
 execution promise, state proof, router simulation, or MEV/gas/transfer model.

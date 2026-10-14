@@ -25,6 +25,22 @@ class HandoffTests(unittest.TestCase):
         self.assertIsNone(result['transaction'])
         self.assertEqual(result['handoff_sha256'], h.review.digest(
             {key: value for key, value in result.items() if key != 'handoff_sha256'}))
+        self.assertEqual(h.verify_handoff(result)['status'], 'accepted')
+
+    def test_verifier_refuses_tampering_and_settlement_fields(self):
+        result = h.handoff(self.observation, self.report, self.policy, '100000000')
+        changed = copy.deepcopy(result)
+        changed['minimum_output_raw'] = '1'
+        with self.assertRaisesRegex(ValueError, 'display disagrees'):
+            h.verify_handoff(changed)
+        changed = copy.deepcopy(result)
+        changed['transaction'] = {'to': 'anything'}
+        with self.assertRaisesRegex(ValueError, 'settlement'):
+            h.verify_handoff(changed)
+        changed = copy.deepcopy(result)
+        changed['handoff_sha256'] = '0' * 64
+        with self.assertRaisesRegex(ValueError, 'digest mismatch'):
+            h.verify_handoff(changed)
 
     def test_unreviewed_or_partial_amount_refused(self):
         for amount in ('1000000000', '2'):
@@ -45,6 +61,14 @@ class HandoffTests(unittest.TestCase):
         with contextlib.redirect_stderr(io.StringIO()) as error:
             self.assertEqual(h.main(['--demo', '--amount', '3']), 1)
         self.assertIn('error', json.loads(error.getvalue()))
+
+    def test_verify_cli_uses_workspace_json_reader(self):
+        result = h.handoff(self.observation, self.report, self.policy, '100000000', 'historical_demo')
+        with patch.object(h.review, 'read_json', return_value=result) as read_json:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertEqual(h.main(['--verify', 'line-1/tools/zto-handoff/example.json']), 0)
+        self.assertEqual(read_json.call_count, 1)
+        self.assertEqual(json.loads(output.getvalue())['status'], 'accepted')
 
 
 if __name__ == '__main__':

@@ -3,6 +3,7 @@
 import argparse
 import json
 from pathlib import Path
+import re
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'zto-review'))
@@ -10,9 +11,16 @@ import zto_review as review
 
 HERE = Path(__file__).resolve().parent
 SCHEMA = 'zto-bound-handoff-v1'
+HANDOFF_KEYS = {
+    'schema', 'status', 'chain_id', 'pool_id', 'block', 'source_digests',
+    'input_token', 'output_token', 'requested_input_raw', 'requested_input',
+    'minimum_output_raw', 'minimum_output', 'slippage_bps',
+    'review_reference_block', 'review_age_blocks', 'settlement', 'transaction',
+    'limitations', 'mode', 'handoff_sha256',
+}
 
 
-def handoff(observation, report, policy, amount):
+def handoff(observation, report, policy, amount, mode='library'):
     """Re-review evidence and select precisely one complete candidate amount.
 
     This deliberately contains no recipient, router, calldata, gas, signature,
@@ -63,9 +71,59 @@ def handoff(observation, report, policy, amount):
             'The minimum is a reviewed planning bound, not an enforced or guaranteed receipt.',
             'Historical evidence is not a current quote, execution simulation, or settlement proof.',
         ],
+        'mode': mode,
     }
     output['handoff_sha256'] = review.digest(output)
     return output
+
+
+def verify_handoff(value):
+    """Validate a self-contained handoff without treating it as settlement data.
+
+    This catches changed fields after a handoff has crossed a file, chat, or
+    worker boundary. It validates structural and arithmetic consistency only;
+    the original snapshot, report, and policy establish its provenance.
+    """
+    require = review.sizes.path.z.require
+    require(type(value) is dict and set(value) == HANDOFF_KEYS,
+            'handoff must contain exactly the documented fields')
+    require(value['schema'] == SCHEMA, 'wrong handoff schema')
+    require(value['status'] == 'ready_for_human_review', 'handoff is not ready for review')
+    require(value['chain_id'] == 1 and value['pool_id'] == review.sizes.path.z.POOL,
+            'handoff is not for the assigned Ethereum ZTO/IMD pool')
+    require(value['input_token'] in ('ZTO', 'IMD') and
+            value['output_token'] in ('ZTO', 'IMD') and
+            value['input_token'] != value['output_token'], 'invalid token direction')
+    require(value['mode'] in ('historical_demo', 'caller_policy', 'library'), 'invalid mode')
+    require(value['settlement'] == 'unspecified' and value['transaction'] is None,
+            'handoff must not contain settlement or transaction data')
+    require(type(value['block']) is dict and set(value['block']) == {'number', 'hash', 'timestamp'} and
+            all(isinstance(value['block'][key], str) and re.fullmatch(r'0x[0-9a-f]+', value['block'][key])
+                for key in value['block']), 'invalid pinned block')
+    require(type(value['source_digests']) is dict and
+            set(value['source_digests']) == {'snapshot_sha256', 'policy_sha256', 'report_sha256'} and
+            all(isinstance(digest, str) and re.fullmatch(r'[0-9a-f]{64}', digest)
+                for digest in value['source_digests'].values()), 'invalid source digests')
+    require(type(value['slippage_bps']) is int and 0 <= value['slippage_bps'] < 10000 and
+            all(type(value[key]) is int and value[key] >= 0
+                for key in ('review_reference_block', 'review_age_blocks')), 'invalid review settings')
+    require(type(value['limitations']) is list and len(value['limitations']) >= 1 and
+            all(isinstance(item, str) and item for item in value['limitations']), 'invalid limitations')
+    decimals = 18  # Both assigned ERC-20s are 18-decimal in the pinned pool evidence.
+    requested = review.sizes.path.z.parse_amount(value['requested_input'], decimals)
+    minimum = review.sizes.path.z.parse_amount(value['minimum_output'], decimals)
+    require(value['requested_input_raw'] == str(requested) and requested > 0,
+            'requested input display disagrees with raw units')
+    require(value['minimum_output_raw'] == str(minimum) and minimum > 0,
+            'minimum output display disagrees with raw units')
+    require(isinstance(value['handoff_sha256'], str) and re.fullmatch(r'[0-9a-f]{64}', value['handoff_sha256']),
+            'invalid handoff digest')
+    unsigned = {key: item for key, item in value.items() if key != 'handoff_sha256'}
+    require(value['handoff_sha256'] == review.digest(unsigned), 'handoff digest mismatch')
+    return {'schema': 'zto-bound-handoff-verification-v1', 'status': 'accepted',
+            'handoff_sha256': value['handoff_sha256'], 'pool_id': value['pool_id'],
+            'input_token': value['input_token'], 'output_token': value['output_token'],
+            'limitations': ['This checks the handoff file only; it does not independently re-review its evidence or prepare settlement.']}
 
 
 def main(argv=None):
@@ -74,24 +132,35 @@ def main(argv=None):
     mode.add_argument('--demo', action='store_true',
                       help='offline handoff from bundled historical real-pool evidence')
     mode.add_argument('--policy', help='review policy JSON inside this workspace')
+    mode.add_argument('--verify', help='verify a workspace handoff JSON without making a new handoff')
     parser.add_argument('--snapshot', help='ZTO Path snapshot JSON inside this workspace')
     parser.add_argument('--report', help='ZTO Sizes report JSON inside this workspace')
-    parser.add_argument('--amount', required=True,
+    parser.add_argument('--amount',
                         help='one exact decimal candidate amount from the reviewed policy')
     args = parser.parse_args(argv)
     try:
-        if args.demo:
+        if args.verify:
+            if args.snapshot or args.report or args.amount:
+                raise ValueError('--verify cannot be combined with handoff inputs')
+            result = verify_handoff(review.read_json(args.verify))
+        elif args.demo:
+            if not args.amount:
+                raise ValueError('--amount is required when making a handoff')
             if args.snapshot or args.report:
                 raise ValueError('--demo cannot be combined with custom files')
             policy_file = review.HERE / 'demo-policy.json'
             snapshot_file, report_file = review.DEFAULT_SNAPSHOT, review.DEFAULT_REPORT
+            selected_mode = 'historical_demo'
         else:
+            if not args.amount:
+                raise ValueError('--amount is required when making a handoff')
             if not args.snapshot or not args.report:
                 raise ValueError('--policy requires --snapshot and --report')
             policy_file, snapshot_file, report_file = args.policy, args.snapshot, args.report
-        result = handoff(review.read_json(snapshot_file), review.read_json(report_file),
-                         review.read_json(policy_file), args.amount)
-        result['mode'] = 'historical_demo' if args.demo else 'caller_policy'
+            selected_mode = 'caller_policy'
+        if not args.verify:
+            result = handoff(review.read_json(snapshot_file), review.read_json(report_file),
+                             review.read_json(policy_file), args.amount, selected_mode)
         print(json.dumps(result, indent=2, allow_nan=False))
         return 0
     except (ValueError, KeyError, TypeError, AttributeError, OSError, OverflowError,

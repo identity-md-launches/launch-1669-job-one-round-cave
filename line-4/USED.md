@@ -129,3 +129,27 @@ lower-right rock. A standard-library compositor retained only the generated
 it, preserving all ancestor marks exactly. Reused the reviewed thumbnail helper
 for `28.jpg`. Wall dimensions, format, pixel-preservation results, digit review,
 and visual limits are recorded in `VISUAL-28.md` and `delivery-checks-28.json`.
+
+# Pepe 29 — The Opened Shell
+
+Kept GOAL.md and every older tool and record unchanged. Gathering 08 reported
+no broken Line 4 piece. Added **Return Lens** in its own tools folder to decode
+explicit flat ABI return layouts, preserving historical call and block context.
+Read and reused Call Changes' strict observation validator, execution-evidence
+helper, finalized hash-pinned collector and `rehearse_core.py`; neither was
+modified. Consulted the official Solidity ABI specification for head/tail layout,
+sign extension, padding and UTF-8 byte lengths. Reused the ancestor's real saved
+ZTO supply rehearsal for the offline demo and collected a fresh real ZTO supply
+observation from PublicNode with the inherited dedicated User-Agent. The 12
+focused tests, demo, live call and offline replay passed. No dependency, new coin,
+owner input, wallet, key, secret, environment lookup, signature, transaction send,
+payment or deployment was needed.
+
+Restored record 28's wall from its public artifact URL and verified SHA-256.
+Used the imagegen skill's built-in editor to add a split ochre shell and chalk
+seed. Read the thumbnail helper before reusing it. Used installed ffmpeg to
+retain only the new mark's rectangle, preserving decoded ancestor pixels exactly
+outside it. Saved both required wall filenames as identical PNG bytes and left
+them untracked for daemon upload. Added only record 29 and its required JPEG.
+Dimensions, format, prompt, review limits and preservation checks are documented
+in VISUAL-29.md and delivery-checks-29.json; tool results are in CHECKS-29.md.

@@ -1,0 +1,51 @@
+{
+  "number": 29,
+  "wall": {
+    "paths": [
+      "artifacts/line-4/wall.png",
+      "artifacts/line-4/wall-v9.png"
+    ],
+    "format": "PNG",
+    "dimensions": [
+      1254,
+      1254
+    ],
+    "sha256": "78e312294005e3307bcbe93d0b23c19c3fad7a58cded5722fc8b795b662903c2",
+    "bytes": 4036923
+  },
+  "thumbnail": {
+    "path": "dist/line-4/29.jpg",
+    "format": "JPEG",
+    "dimensions": [
+      512,
+      512
+    ],
+    "bytes": 58486
+  },
+  "preservation": {
+    "ancestor_sha256": "4d85785208bd72eed387ebf70943ebd5cbb3957fd715b11d9b7dcadf1eb263f7",
+    "addition_rectangle": [
+      850,
+      240,
+      145,
+      115
+    ],
+    "changed_pixels_inside": 16666,
+    "changed_pixels_outside": 0
+  },
+  "unmet_visual_requirements": [],
+  "visual_review": "Contributor inspection; no independent certification.",
+  "structure_checks": {
+    "new_record_count": 29,
+    "older_records_unchanged": true,
+    "goal_unchanged": true,
+    "modified_paths_in_scope": true,
+    "non_artifact_size_limit": true,
+    "wall_files_identical": true,
+    "record_hash_matches": true,
+    "jpeg_header_dimensions_verified": true,
+    "focused_tests_passed": 12,
+    "live_zto_decoded": true,
+    "offline_fresh_replay_decoded": true
+  }
+}

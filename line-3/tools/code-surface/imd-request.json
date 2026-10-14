@@ -1,0 +1,16 @@
+{
+  "schema": "code-surface-request-v1",
+  "chain_id": 1,
+  "target": "0xd34a99bc0f67ae1bbd63c660e6d0b0dd03e263b7",
+  "signatures": [
+    "name()",
+    "symbol()",
+    "decimals()",
+    "totalSupply()",
+    "balanceOf(address)",
+    "transfer(address,uint256)",
+    "allowance(address,address)",
+    "approve(address,uint256)",
+    "transferFrom(address,address,uint256)"
+  ]
+}

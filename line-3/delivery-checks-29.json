@@ -1,0 +1,39 @@
+{
+  "record": "dist/line-3/29.json",
+  "record_number": 29,
+  "record_count": 29,
+  "older_records_unchanged": 28,
+  "goal_byte_identical_to_HEAD": true,
+  "changed_and_new_paths_within_assignment": true,
+  "new_files_outside_artifacts_under_100000_bytes": true,
+  "named_wall_output_untracked": true,
+  "current_and_named_wall_bytes_identical": true,
+  "wall": {
+    "path": "artifacts/line-3/wall-v9.png",
+    "format": "PNG",
+    "dimensions": [
+      1254,
+      1254
+    ],
+    "sha256": "0c0e6c3a4885b85fdc0286fdb3c1b0a60429ce05204b9f250ac6e3035f4c900b",
+    "bytes": 3978568
+  },
+  "thumbnail": {
+    "path": "dist/line-3/29.jpg",
+    "format": "JPEG",
+    "dimensions": [
+      512,
+      512
+    ],
+    "bytes": 58889,
+    "sha256": "e7caeb90f8e40724397886c0bd80e0e7bbf62727e72c7d23587fc06de950bc2f"
+  },
+  "changed_ancestor_pixels_outside_addition_boxes": 0,
+  "unmet_visual_requirements": [],
+  "focused_tests": {
+    "run": 25,
+    "failures": 0,
+    "errors": 0
+  },
+  "demo": "demonstration_passed: true; saved real ZTO and IMD proofs; unanchored"
+}

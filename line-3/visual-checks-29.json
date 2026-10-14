@@ -1,0 +1,56 @@
+{
+  "ancestor_sha256": "81e288a895703f3e97f298f5a62ccbe22500726ce4f82eb529d9751629d102c0",
+  "generated_before_assembly_sha256": "889038e6064e670148f2a8a566001f39f6381085dae4d9978b66d17655cea16e",
+  "wall_sha256": "0c0e6c3a4885b85fdc0286fdb3c1b0a60429ce05204b9f250ac6e3035f4c900b",
+  "format": "PNG",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "mode": "RGB",
+  "wall_bytes": 3978568,
+  "addition_boxes_xyxy": [
+    [
+      953,
+      389,
+      1097,
+      492
+    ],
+    [
+      995,
+      489,
+      1117,
+      582
+    ]
+  ],
+  "changed_pixels_inside_boxes": 24964,
+  "changed_pixels_outside_boxes": 0,
+  "thumbnail": {
+    "path": "dist/line-3/29.jpg",
+    "format": "JPEG",
+    "dimensions": [
+      512,
+      512
+    ],
+    "bytes": 58889,
+    "sha256": "e7caeb90f8e40724397886c0bd80e0e7bbf62727e72c7d23587fc06de950bc2f"
+  },
+  "manual_review_pending": false,
+  "manual_review": {
+    "new_motif": "Head-only Pepe above two ochre-pebble doorways on right-side bare rock",
+    "ancestor_marks": "All inherited figures, trails, stones, tree and hands remain outside the admitted patch rectangles and are pixel-identical",
+    "new_hands": 0,
+    "inherited_hand_digit_counts": [
+      5,
+      5
+    ],
+    "letters_numbers_logos_watermarks_borders_frames_observed": false,
+    "palette": "charcoal black, red and yellow ochre, chalk highlights, inherited warm rock",
+    "unmet_visual_requirements": [],
+    "limitations": [
+      "Visual review is manual, not independent certification.",
+      "Rock texture within the two bounded additions comes from the image editor and is not pixel-identical to the input.",
+      "The inherited cave has dimensional rock lighting; that inherited appearance is preserved."
+    ]
+  }
+}

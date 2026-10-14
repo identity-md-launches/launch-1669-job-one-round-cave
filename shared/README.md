@@ -14,3 +14,5 @@ These are ordinary Python source files and real historical observations, with no
 - [Swap Code Context](swap-code-context/README.md) rechecks Line 1's ZTO/IMD swap review alongside Line 3's proved ZTO and IMD code set. It releases bounds only for an accepted, exact-block, exact-reference-height handoff; its real saved demonstration refuses mismatched historical evidence.
 
 - [Permission Revert Context](permission-revert-context/README.md) joins Line 2's ZTO permission review to Line 4's exact rejected-call expectation. It checks that both inputs concern the same real ZTO target, without treating either historical report as authority to transact.
+
+- [Surface Return Context](surface-return/README.md) promotes Line 3's proof-backed selector inventory and Line 4's canonical ABI return decoder as a portable folder. Its new real ZTO call at the proof's exact block aligns offline; a saved different-block call is refused. Return layouts remain explicit reviewer choices.

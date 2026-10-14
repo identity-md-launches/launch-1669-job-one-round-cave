@@ -1,7 +1,3 @@
 none
 
-The four lines are standard-library inspection and planning tools: swap bounds,
-ERC-20 permission review, executable-code identity, and call rehearsal. They
-run against the existing real ZTO/IMD assets and need neither a new asset nor a
-Uniswap v4 hook. A new coin would not make any line possible and would add
-unrelated custody and pool risk.
+The four lines and their shared tools can exist as standard-library readers and planners using the real Ethereum ZTO/IMD assets. This gathering's new same-block supply check uses ZTO directly. Neither a new coin nor a Uniswap v4 hook is needed to make any line possible. No launch request or contract deployment order is warranted; there is no contract to deploy in this round.

@@ -15,6 +15,17 @@ def checks():
                 commands.append((f'line-{number}-{folder.name}-suite',
                     ['-m', 'unittest', 'discover', '-s', str(folder), '-p', 'test_*.py', '-v'], 0))
     commands.extend([
+        ('surface-return-demo', ['shared/surface-return/surface_return.py', '--demo'], 0),
+        ('surface-return-block-mismatch', ['shared/surface-return/surface_return.py', '--bundle', 'shared/surface-return/zto-proof.json', '--observation', 'shared/surface-return/zto-other-block-call.json', '--signature', 'totalSupply()', '--types', 'uint256'], 2),
+        ('return-lens-demo', ['line-4/tools/return-lens/return_lens.py', 'demo'], 0),
+        ('code-surface-demo', ['line-3/tools/code-surface/demo.py'], 0),
+        ('code-delta-demo', ['line-3/tools/code-delta/demo.py'], 0),
+        ('draft-bundle-demo', ['line-2/tools/draft-bundle/draft_bundle.py'], 0),
+        ('draft-age-demo', ['line-2/tools/draft-age/draft_age.py'], 0),
+        ('rehearsal-expiry-demo', ['line-4/tools/rehearsal-expiry/rehearsal_expiry.py', 'demo'], 0),
+        ('zto-handoff-demo', ['line-1/tools/zto-handoff/zto_handoff.py', '--demo', '--amount', '100000000'], 0),
+        ('zto-handoff-verify', ['line-1/tools/zto-handoff/zto_handoff.py', '--verify', 'line-1/tools/zto-handoff/demo-handoff.json'], 0),
+        ('permission-revert-context-demo', ['shared/permission-revert-context/permission_revert_context.py'], 0),
         ('zto-refresh-demo', ['line-1/tools/zto-refresh/zto_refresh.py'], 0),
         ('zto-review-demo', ['line-1/tools/zto-review/zto_review.py', '--demo'], 0),
         ('draft-witness-demo', ['line-2/tools/draft-witness/draft_witness.py'], 0),
@@ -73,12 +84,17 @@ def main():
         raise ValueError('run from the workspace root')
     results = []
     for name, args, expected in checks():
-        command = [sys.executable, '-B'] + args
+        command = ([sys.executable, '-B', 'gathering/run_suite.py'] + args[2:]
+                   if args[:2] == ['-m', 'unittest'] else [sys.executable, '-B'] + args)
         try:
             done = subprocess.run(command, text=True, capture_output=True, timeout=35)
             result = {'name': name, 'command': ['python3', '-B'] + args,
                       'expected_exit': expected, 'exit': done.returncode,
                       'passed': done.returncode == expected, 'stderr': done.stderr}
+            if args[0] == '-m' and done.returncode == 0:
+                match = __import__('re').search(r'Ran ([0-9]+) tests[^\n]*', done.stderr)
+                result['stderr'] = (match.group(0) + '\nOK\n') if match else done.stderr
+                result['test_count'] = int(match.group(1)) if match else 0
             if args[0] != '-m':
                 output = json.loads(done.stdout) if done.stdout else {}
                 result['stdout_sha256'] = hashlib.sha256(done.stdout.encode()).hexdigest()

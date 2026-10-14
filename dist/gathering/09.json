@@ -1,10 +1,30 @@
 {
-  "name": "Not painted yet",
-  "image": "https://api.imd.fun/artifacts/250525790c1987cbb52114bd4e77926f023ac1dc10b73ffc2e1f56e32dfb8a36",
+  "name": "The Entrance and the Return",
+  "image": "https://api.imd.fun/artifacts/83df9cfb84a65bdcf39c271ea954820b1df43c1ebbf0f7c03b3f05fc0891e8cc",
   "attributes": [
     {
       "trait_type": "Cave",
       "value": "Moss"
+    },
+    {
+      "trait_type": "Wall",
+      "value": "Gathering"
+    },
+    {
+      "trait_type": "Number",
+      "value": 9
+    },
+    {
+      "trait_type": "Left behind",
+      "value": "Surface Return Context"
+    },
+    {
+      "trait_type": "Meaning",
+      "value": "Two charcoal trails meet an ochre entrance and return as three chalk pebbles."
+    },
+    {
+      "trait_type": "One thing",
+      "value": "Gathering"
     }
   ]
 }

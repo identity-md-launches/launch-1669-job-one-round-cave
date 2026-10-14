@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check Gathering 07 files locally, without networking or changing line folders."""
+"""Check Gathering 09 files locally, without networking or changing line folders."""
 import hashlib
 from html.parser import HTMLParser
 import json
@@ -42,20 +42,21 @@ def jpeg_dimensions(raw):
 
 
 def main():
-    wall = Path('artifacts/gathering/wall-v7.png')
+    wall = Path('artifacts/gathering/wall-v9.png')
     raster = wall.read_bytes()
     width, height, rows = thumbnail.png_rgb(wall)
     assert (width, height) == (1254, 1254)
     digest = hashlib.sha256(raster).hexdigest()
-    jpg = Path('dist/gathering/07.jpg').read_bytes()
+    assert Path('artifacts/gathering/wall.png').read_bytes() == raster
+    jpg = Path('dist/gathering/09.jpg').read_bytes()
     assert jpeg_dimensions(jpg) == (512, 512) and len(jpg) < 100_000
-    record = json.loads(Path('dist/gathering/07.json').read_text())
+    record = json.loads(Path('dist/gathering/09.json').read_text())
     assert set(record) == {'name', 'image', 'attributes'}
     assert record['image'] == 'https://api.imd.fun/artifacts/' + digest
     traits = record['attributes']
     assert [t['trait_type'] for t in traits] == ['Cave', 'Wall', 'Number', 'Left behind', 'Meaning', 'One thing']
     assert all(set(t) == {'trait_type', 'value'} for t in traits)
-    assert [t['value'] for t in traits[:3]] == ['Moss', 'Gathering', 7]
+    assert [t['value'] for t in traits[:3]] == ['Moss', 'Gathering', 9]
     assert type(traits[2]['value']) is int
     assert traits[-1]['value'] == 'Gathering'
     goals = json.loads(Path('dist/goals.json').read_text())
@@ -87,7 +88,7 @@ def main():
     assert not any(p.startswith(('line-1/', 'line-2/', 'line-3/', 'line-4/', 'dist/line-')) for p in diff)
     status = subprocess.run(['git', 'status', '--porcelain', '--untracked-files=all'], capture_output=True, text=True, check=True).stdout.splitlines()
     paths = [line[3:] for line in status]
-    assert all(p.startswith(('gathering/', 'shared/', 'dist/', 'artifacts/gathering/')) for p in paths)
+    assert all(p.startswith(('gathering/', 'shared/', 'dist/', 'artifacts/gathering/', 'test/scratch/')) for p in paths)
     tracked_outputs = subprocess.run(['git', 'ls-files', 'artifacts/gathering/'], capture_output=True, text=True, check=True).stdout
     assert not tracked_outputs.strip()
     oversized = [str(p) for root in ('gathering', 'shared', 'dist') for p in Path(root).rglob('*') if p.is_file() and p.stat().st_size >= 100_000]
@@ -98,15 +99,15 @@ def main():
     assert checks['all_passed']
     visual = json.loads(Path('gathering/visual-checks.json').read_text())
     assert visual['output_sha256'] == digest and visual['changed_pixels_outside_addition'] == 0
-    assert visual['source_sha256'] == json.loads(Path('dist/gathering/06.json').read_text())['image'].rsplit('/', 1)[-1]
+    assert visual['source_sha256'] == json.loads(Path('dist/gathering/08.json').read_text())['image'].rsplit('/', 1)[-1]
     assert visual['unmet_visual_requirements_observed'] == []
     tests = sum(int(re.search(r'Ran ([0-9]+) tests', c.get('stderr', '')).group(1)) for c in checks['checks'] if '-suite' in c['name'])
-    assert tests == 468
+    assert tests == 567
     for p in Path('gathering').glob('live-*.json'):
         assert p.stat().st_size and isinstance(json.loads(p.read_text()), dict)
-    result = {'schema': 'gathering-delivery-checks-v7', 'authority': 'Local contributor checks; not independent certification.',
+    result = {'schema': 'gathering-delivery-checks-v9', 'authority': 'Local contributor checks; not independent certification.',
               'wall': {'path': str(wall), 'format': 'PNG RGB 8-bit', 'width': width, 'height': height, 'sha256': digest, 'bytes': len(raster), 'chunk_crcs_and_raster_valid': True, 'required_png_untracked': True},
-              'thumbnail': {'path': 'dist/gathering/07.jpg', 'format': 'baseline JPEG', 'width': 512, 'height': 512, 'bytes': len(jpg)},
+              'thumbnail': {'path': 'dist/gathering/09.jpg', 'format': 'baseline JPEG', 'width': 512, 'height': 512, 'bytes': len(jpg)},
               'visual_review': {'left_hand_digits': 5, 'right_hand_digits': 5, 'new_hands': 0, 'unmet_requirements_observed': [], 'limits': 'Subjective review; exact preservation is measured outside the addition rectangle.'},
               'records': len(records), 'painted': painted, 'placeholders': pending, 'gallery_articles': gallery.articles, 'goals': len(goals),
               'line_sources_and_records_unchanged': True, 'changed_source_paths_within_scope': True, 'oversized_output_source_files': oversized,

@@ -1,0 +1,53 @@
+{
+  "schema": "surface-return-context-v1",
+  "verdict": "aligned",
+  "checks": {
+    "same_target": true,
+    "same_block_number": true,
+    "same_block_hash": true,
+    "same_block_timestamp": true,
+    "call_selector_matches": true,
+    "target_candidate_observed": true,
+    "return_decoded": true
+  },
+  "failed_checks": [],
+  "chain_id": 1,
+  "target": "0xd782bdea4ef02a0bd391eb9089470c8080f0a68e",
+  "signature": "totalSupply()",
+  "selector": "0x18160ddd",
+  "code_block": {
+    "number": "0x18f9518",
+    "hash": "0xb6e55dcdf6ded6229f188d80f0b986222b198d104e09e9194bb8d97539355a06"
+  },
+  "call_block": {
+    "number": "0x18f9518",
+    "hash": "0xb6e55dcdf6ded6229f188d80f0b986222b198d104e09e9194bb8d97539355a06",
+    "timestamp": "0x6acec6d7"
+  },
+  "proof_anchor": "unanchored-rpc-header",
+  "state_inclusion_verified": true,
+  "target_pattern_matches": [
+    {
+      "address": "0xd782bdea4ef02a0bd391eb9089470c8080f0a68e",
+      "selector": "0x18160ddd",
+      "constant_pc": 123,
+      "jumpi_pc": 132,
+      "destination_pc": 247,
+      "pattern_overlaps_recognized_metadata": false,
+      "destination_in_recognized_metadata": false
+    }
+  ],
+  "decoded_values": [
+    {
+      "type": "uint256",
+      "value": "1000000000000000000000000000"
+    }
+  ],
+  "return_verdict": "decoded",
+  "input_sha256": {
+    "proof_bundle": "6d8cfd3b0ae6d13de4ca35d80a207b7cd973a47aed259960ba9bd1c4084f0c7c",
+    "call_observation": "331dbbefe5ebcbc6bc9d6fb3a179039128731f0a9076d59c4638135ddc2cfb32",
+    "caller_choices": "787940d66dafc32a5818420d7a142c2e88525aeffd637d9a4a01854bd3f6a057"
+  },
+  "limits": "Aligned historical evidence is not a verified ABI, routing or reachability proof, code approval, current-state check, permission to transact or execution guarantee. Return types and signature are caller choices. The code proof is unanchored unless the caller independently supplies an authentic block hash; call returns remain unproven RPC claims even when code inclusion verifies. Nothing is signed or sent."
+}

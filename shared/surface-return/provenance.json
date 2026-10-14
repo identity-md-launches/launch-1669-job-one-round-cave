@@ -1,0 +1,79 @@
+{
+  "files": [
+    {
+      "source": "line-3/tools/code-surface/code_surface.py",
+      "copy": "shared/surface-return/code-surface/code_surface.py",
+      "sha256": "d4fe4b10ac3361b28d2efa01a8faf817d912b8c821b7d362545b9b0784135b0b",
+      "changes": "none"
+    },
+    {
+      "source": "line-3/tools/code-ancestry/code_ancestry.py",
+      "copy": "shared/surface-return/code-ancestry/code_ancestry.py",
+      "sha256": "c2aa64efa6a82c67baf8f6076a92e2d3c920ed73636ab5a449f8b190de07b37d",
+      "changes": "none"
+    },
+    {
+      "source": "line-3/tools/code-proof/code_proof.py",
+      "copy": "shared/surface-return/code-proof/code_proof.py",
+      "sha256": "9b8977abe89db8c268397104cf115309c6614088271cdd744b046d6f9ab79940",
+      "changes": "none"
+    },
+    {
+      "source": "line-3/tools/code-lens/code_lens.py",
+      "copy": "shared/surface-return/code-lens/code_lens.py",
+      "sha256": "83d6a84c63ab8e171c1307d08ad4af083814ac8b7cce54070cf7a88f24f56c0f",
+      "changes": "none"
+    },
+    {
+      "source": "line-3/tools/code-lens/keccak.py",
+      "copy": "shared/surface-return/code-lens/keccak.py",
+      "sha256": "193a5702411286cf42376bf4d08d223f1d9287ef2e480ef33778e8ba470afa9e",
+      "changes": "none"
+    },
+    {
+      "source": "line-3/tools/code-opcodes/code_opcodes.py",
+      "copy": "shared/surface-return/code-opcodes/code_opcodes.py",
+      "sha256": "8dd99a894ac18850a37ecc8649d36ae22cacbc5ed14c9702648eeae5cd1d35f0",
+      "changes": "none"
+    },
+    {
+      "source": "line-4/tools/return-lens/return_lens.py",
+      "copy": "shared/surface-return/return-lens/return_lens.py",
+      "sha256": "82d0c507a5c194a7160d9e58dbe03688a0c11bde57b95a2bc98a7fc619152bd5",
+      "changes": "none"
+    },
+    {
+      "source": "line-4/tools/call-changes/call_changes.py",
+      "copy": "shared/surface-return/call-changes/call_changes.py",
+      "sha256": "7db818814b588991ca9fe8032f8afac24361eabd4927b565c784d6f4dd794536",
+      "changes": "none"
+    },
+    {
+      "source": "line-4/tools/call-changes/rehearse_core.py",
+      "copy": "shared/surface-return/call-changes/rehearse_core.py",
+      "sha256": "ddb70529bce2d13f0ca79be281446149d150432004f552ef989fbe23385314f9",
+      "changes": "none"
+    }
+  ],
+  "runtime": "Python standard library; all dependencies included as ordinary files",
+  "evidence": [
+    {
+      "source": "line-3/tools/code-delta/zto-later-proof.json",
+      "copy": "shared/surface-return/zto-proof.json",
+      "sha256": "f8811392df59f2cab7bd20c2caf7d0063c3fe6bfdcd06d9630cdee4af615caac",
+      "description": "Real saved code proof copied unchanged"
+    },
+    {
+      "source": "line-4/tools/return-lens/zto-live-observation.json",
+      "copy": "shared/surface-return/zto-other-block-call.json",
+      "sha256": "11718e08f8bb4a07fa363ab2ccca0a07734aa9894cce435c3ce46d0208aed4eb",
+      "description": "Original mismatched historical call copied unchanged"
+    },
+    {
+      "source": "gathering/zto-surface-call.json",
+      "copy": "shared/surface-return/zto-call.json",
+      "sha256": "dea62376a429567d0b25df256680fce36e2a960c723d45b8d8498cc0f50d45bc",
+      "description": "New real public RPC read at the code proof block"
+    }
+  ]
+}

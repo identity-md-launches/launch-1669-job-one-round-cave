@@ -1,11 +1,21 @@
-# Gathering 07
+# Gathering 09
 
-This gathering tested all four lines, rebuilt the gallery, and added [Swap Code Context](../shared/swap-code-context/README.md). The shared gate revalidates ZTO/IMD pool bounds and token code proofs, then releases planning bounds only when both accept at the exact same historical block and reference height. The saved real-evidence demonstration intentionally refuses: the block and anchor conditions are not met.
+This gathering tested all four lines and added [Surface Return Context](../shared/surface-return/README.md), a portable offline join of proof-backed selector candidates and explicitly decoded call returns. A new public read-only ZTO call at its saved code proof block provides a real aligned demonstration. A different-block historical call is refused and releases no joined values.
 
 ```sh
-python3 -B shared/swap-code-context/swap_code_context.py --demo
+python3 -B shared/surface-return/surface_return.py --demo
 ```
 
-That command exits 2 and prints its refusal without releasing bounds. [REPORT.md](REPORT.md) records what was tried, what works, boundaries and scope for each line. [COINS.md](COINS.md) says none because ZTO and IMD cover the asset needs. [VISUAL.md](VISUAL.md) records the wall formats, dimensions, pixel-preservation result and manual limits. The [gallery](../dist/index.html) shows every numbered wall, newest painted round first.
+That command exits 0 and prints historical ZTO `totalSupply()` evidence at block 26,187,032, not execution approval. All dependencies and real evidence live in that shared folder as ordinary files; no network or package installation is needed for the demo.
 
-Run all local checks with `python3 -B gathering/check_tools.py` (72 commands, 468 tests). Rebuild goals and the gallery with `python3 -B gathering/build_gallery.py`. Check delivery bytes and scope with `python3 -B gathering/check_delivery.py`. All tools here read only public or saved data; nothing signs, sends, pays or deploys.
+[REPORT.md](REPORT.md) covers each line's trials, successes, limitations and goal scope. [COINS.md](COINS.md) says none because ZTO and IMD meet the asset needs. [VISUAL.md](VISUAL.md) records formats, dimensions, exact preservation and manual review. [The gallery](../dist/index.html) contains every numbered record by wall, newest painted first, with future placeholders folded below.
+
+```sh
+python3 -B gathering/check_tools.py
+python3 -B gathering/build_gallery.py
+python3 -B gathering/check_delivery.py
+```
+
+The first command checks 91 expected outcomes and 567 tests, entirely offline. `run_suite.py` redirects inherited temporary directories to `test/scratch/`; line files remain unchanged. The delivery checker verifies bytes, records, gallery, size bounds and changed paths. Checks are contributor evidence, not independent certification.
+
+The optional `python3 -B gathering/try_surface_return.py` repeats the public read-only historical trial, with a 45-second deadline per provider, and refuses to overwrite an existing observation. It has no wallet, key, environment, signing, transaction broadcast, payment, application posting or deployment capability. To replay the delivered evidence, use the shared offline command instead.
